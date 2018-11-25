@@ -11,6 +11,7 @@ import { RecipeComponent } from './components/home/recipes/recipe/recipe.compone
 import { LiquidStatusComponent } from './components/liquid-status/liquid-status.component';
 import { LiquidDatabaseComponent } from './components/liquid-database/liquid-database.component';
 import { RecipeDatabaseComponent } from './components/recipe-database/recipe-database.component';
+import { PumpSetupComponent } from './components/pump-setup/pump-setup.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -64,6 +65,10 @@ const appRoutes: Routes = [
     {
       path: 'liquids',
       component: LiquidDatabaseComponent
+    },
+    {
+      path: 'pumps',
+      component: PumpSetupComponent
     },
     {
       path: '**',

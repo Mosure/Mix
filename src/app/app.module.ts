@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +21,7 @@ import { RecipeComponent } from './components/home/recipes/recipe/recipe.compone
 import { LiquidStatusComponent } from './components/liquid-status/liquid-status.component';
 import { LiquidDatabaseComponent } from './components/liquid-database/liquid-database.component';
 import { RecipeDatabaseComponent } from './components/recipe-database/recipe-database.component';
+import { PumpSetupComponent } from './components/pump-setup/pump-setup.component';
 
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LockDialogComponent } from './components/nav-bar/lock-dialog/lock-dialog.component';
@@ -47,6 +50,7 @@ import {
     LiquidStatusComponent,
     LiquidDatabaseComponent,
     RecipeDatabaseComponent,
+    PumpSetupComponent,
 
     NavBarComponent,
     LockDialogComponent,
@@ -57,8 +61,10 @@ import {
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [
     CacheService,

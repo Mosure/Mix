@@ -4,7 +4,15 @@
             <mat-icon *ngIf="router.url !== '/'">arrow_back</mat-icon>
             <mat-icon *ngIf="router.url === '/'">home</mat-icon>
         </button>
-        <span class="toolbar-title">Mix</span>
+        <span class="toolbar-title" routerLink="/">Mix</span>
+        <mat-icon *ngIf="router.url !== '/'">chevron_right</mat-icon>
+        <span *ngIf="router.isActive('/shots', false)">Shots</span>
+        <span *ngIf="router.isActive('/mixers', false)">Mixers</span>
+        <span *ngIf="router.isActive('/recipes', false) && !router.isActive('/recipes/database', false)">Recipes</span>
+        <span *ngIf="router.isActive('/recipes/database', false)">Recipe Editor</span>
+        <span *ngIf="router.isActive('/status', false)">Status</span>
+        <span *ngIf="router.isActive('/liquids', false)">Liquid DB</span>
+        <span *ngIf="router.isActive('/pumps', false)">System Setup</span>
         <span class="toolbar-spacer"></span>
         <button [matMenuTriggerFor]="notifications" *ngIf="pumpService.GetLowPumps().length > 0" mat-icon-button>
             <mat-icon [matBadge]="pumpService.GetLowPumps().length" matBadgeColor="warn">notification_important</mat-icon>
@@ -21,7 +29,7 @@
                 <mat-icon>lock_open</mat-icon>
                 <span>Unlock</span>
             </button>
-            <button routerLink="/status" *ngIf="!lockService.isLocked()" mat-menu-item>
+            <button routerLink="/status" mat-menu-item>
                 <mat-icon>opacity</mat-icon>
                 <span>Contents Status</span>
             </button>
@@ -32,6 +40,10 @@
             <button routerLink="/liquids" *ngIf="!lockService.isLocked()" mat-menu-item>
                 <mat-icon>list</mat-icon>
                 <span>Liquid Database</span>
+            </button>
+            <button routerLink="/pumps" *ngIf="!lockService.isLocked()" mat-menu-item>
+                <mat-icon>settings</mat-icon>
+                <span>System Setup</span>
             </button>
         </mat-menu>
         <mat-menu #notifications="matMenu">
