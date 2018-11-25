@@ -1,0 +1,44 @@
+<mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+        <button routerLink="../" mat-icon-button>
+            <mat-icon *ngIf="router.url !== '/'">arrow_back</mat-icon>
+            <mat-icon *ngIf="router.url === '/'">home</mat-icon>
+        </button>
+        <span class="toolbar-title">Mix</span>
+        <span class="toolbar-spacer"></span>
+        <button [matMenuTriggerFor]="notifications" *ngIf="pumpService.GetLowPumps().length > 0" mat-icon-button>
+            <mat-icon [matBadge]="pumpService.GetLowPumps().length" matBadgeColor="warn">notification_important</mat-icon>
+        </button>
+        <button [matMenuTriggerFor]="menu" mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button (click)="lock()" *ngIf="!lockService.isLocked()" mat-menu-item>
+                <mat-icon>lock</mat-icon>
+                <span>Lock</span>
+            </button>
+            <button (click)="unlock()" *ngIf="lockService.isLocked()" mat-menu-item>
+                <mat-icon>lock_open</mat-icon>
+                <span>Unlock</span>
+            </button>
+            <button routerLink="/status" *ngIf="!lockService.isLocked()" mat-menu-item>
+                <mat-icon>opacity</mat-icon>
+                <span>Contents Status</span>
+            </button>
+            <button routerLink="/recipes/database" *ngIf="!lockService.isLocked()" mat-menu-item>
+                <mat-icon>dashboard</mat-icon>
+                <span>Recipe Editor</span>
+            </button>
+            <button routerLink="/liquids" *ngIf="!lockService.isLocked()" mat-menu-item>
+                <mat-icon>list</mat-icon>
+                <span>Liquid Database</span>
+            </button>
+        </mat-menu>
+        <mat-menu #notifications="matMenu">
+            <button [disabled]="!lockService.isLocked()" *ngFor="let pump of pumpService.GetLowPumps()" mat-menu-item>
+                <mat-icon>info</mat-icon>
+                <span>{{pump.liquid}} is running low ({{pump.level / pump.volume * 100}}%)</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>

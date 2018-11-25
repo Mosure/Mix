@@ -16,9 +16,13 @@ import {
     Cache
 } from './cache.service';
 
+import { Pump } from '../models/pump';
+
 @Injectable()
 export class PumpService {
     private cache: Cache<any>;
+
+    pumps: Pump[];
     
     constructor(
         private errorHandler: ErrorHandlerService,
@@ -26,6 +30,16 @@ export class PumpService {
         private http: HttpClient) {
 
         this.cache = this.cacheService.initializeService<string>(this);
+
+        this.pumps = new Array<Pump>();
+
+        let newPump = new Pump();
+        newPump.level = 10;
+        newPump.volume = 100;
+        newPump.liquid = 'Sprite';
+        newPump.id = '1';
+
+        this.pumps.push(newPump);
     }
 
     GetAPIBuildNumber(): Observable<string> {
@@ -63,5 +77,18 @@ export class PumpService {
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
+    }
+
+    GetLowPumps() {
+        const threshold = 0.1;
+        let toReturn = [];
+
+        for (const pump of this.pumps) {
+            if (pump.level / pump.volume <= threshold) {
+                toReturn.push(pump);
+            }
+        }
+
+        return toReturn;
     }
 }
