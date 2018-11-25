@@ -5,4 +5,5 @@ export class Pump {
     volume: number;
     level: number;
     hasCheckValve: boolean;
+    enabled: boolean;
 }

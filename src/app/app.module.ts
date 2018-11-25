@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +21,8 @@ import { LiquidDatabaseComponent } from './components/liquid-database/liquid-dat
 import { RecipeDatabaseComponent } from './components/recipe-database/recipe-database.component';
 
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { LockDialogComponent } from './components/nav-bar/lock-dialog/lock-dialog.component';
+import { UnlockDialogComponent } from './components/nav-bar/unlock-dialog/unlock-dialog.component';
 
 import {
   CacheService,
@@ -46,12 +49,15 @@ import {
     RecipeDatabaseComponent,
 
     NavBarComponent,
+    LockDialogComponent,
+    UnlockDialogComponent
   ],
   imports: [
     AppMaterialModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [
@@ -62,6 +68,10 @@ import {
     PumpService,
     RecipeService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LockDialogComponent,
+    UnlockDialogComponent
+  ]
 })
 export class AppModule { }

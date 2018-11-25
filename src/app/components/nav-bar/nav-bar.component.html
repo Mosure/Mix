@@ -35,9 +35,9 @@
             </button>
         </mat-menu>
         <mat-menu #notifications="matMenu">
-            <button [disabled]="!lockService.isLocked()" *ngFor="let pump of pumpService.GetLowPumps()" mat-menu-item>
+            <button [disabled]="lockService.isLocked()" *ngFor="let pump of pumpService.GetLowPumps()" mat-menu-item>
                 <mat-icon>info</mat-icon>
-                <span>{{pump.liquid}} is running low ({{pump.level / pump.volume * 100}}%)</span>
+                <span>{{pump.liquid}} #{{pump.id}} is running low ({{pump.level / pump.volume * 100}}%)</span>
             </button>
         </mat-menu>
     </mat-toolbar-row>

@@ -6,6 +6,9 @@ import {
     MatIconModule,
     MatMenuModule,
     MatBadgeModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
 
 } from '@angular/material';
 
@@ -16,6 +19,9 @@ import {
         MatIconModule,
         MatMenuModule,
         MatBadgeModule,
+        MatDialogModule,
+        MatInputModule,
+        MatFormFieldModule,
 
     ],
   exports: [
@@ -24,6 +30,9 @@ import {
         MatIconModule,
         MatMenuModule,
         MatBadgeModule,
+        MatDialogModule,
+        MatInputModule,
+        MatFormFieldModule,
 
     ],
 })

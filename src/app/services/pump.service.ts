@@ -38,6 +38,7 @@ export class PumpService {
         newPump.volume = 100;
         newPump.liquid = 'Sprite';
         newPump.id = '1';
+        newPump.enabled = true;
 
         this.pumps.push(newPump);
     }
@@ -84,7 +85,7 @@ export class PumpService {
         let toReturn = [];
 
         for (const pump of this.pumps) {
-            if (pump.level / pump.volume <= threshold) {
+            if (pump.enabled && pump.level / pump.volume <= threshold) {
                 toReturn.push(pump);
             }
         }
