@@ -9,4 +9,5 @@ export class Liquid {
 export enum LiquidType {
     Shotable = "SHOTABLE",
     Mixer = "MIXER",
+    Syrup = "SYRUP"
 }
