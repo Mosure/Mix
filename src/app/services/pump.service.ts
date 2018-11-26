@@ -40,10 +40,22 @@ export class PumpService {
         newPump.id = '1';
         newPump.enabled = true;
 
+        let newPump2 = new Pump();
+        newPump2.level = 50;
+        newPump2.volume = 100;
+        newPump2.liquid = 'Vodka';
+        newPump2.id = '2';
+        newPump2.enabled = true;
+
         this.pumps.push(newPump);
+        this.pumps.push(newPump2);
     }
 
-    GetAPIBuildNumber(): Observable<string> {
+    GetActivePumps(): Observable<Pump[]> | Pump[] {
+        return this.pumps.filter(p => {
+            return p.enabled;
+        });
+
         const id = 'Build Number :)';
 
         const options = {
@@ -61,26 +73,7 @@ export class PumpService {
                     ));
     }
 
-    GetAPIBuildURI(): Observable<string> {
-        const id = 'Build URI :)';
-
-        const options = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-            responseType: 'text' as 'json'
-        };
-
-        // Need to change the way caching is set by wrapping these requests in a cache
-        return this.cache.apply(id, this.http.get(environment.api + 'status/build/uri', options)
-                    .pipe(
-                        map(result => result as string),
-                        tap(
-                            data => { },
-                            error => this.errorHandler.HandleError(error, null)
-                        )
-                    ));
-    }
-
-    GetLowPumps() {
+    GetLowPumps(): Observable<Pump[]> | Pump[] {
         const threshold = 0.1;
         let toReturn = [];
 

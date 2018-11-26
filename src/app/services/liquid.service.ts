@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 
 import { ErrorHandlerService } from './error-handler.service';
 
+import { Liquid, LiquidType } from '../models';
+
 import {
     CacheService,
     Cache
@@ -19,6 +21,8 @@ import {
 @Injectable()
 export class LiquidService {
     private cache: Cache<any>;
+
+    private liquids: Liquid[];
     
     constructor(
         private errorHandler: ErrorHandlerService,
@@ -28,7 +32,15 @@ export class LiquidService {
         this.cache = this.cacheService.initializeService<string>(this);
     }
 
-    GetAPIBuildNumber(): Observable<string> {
+    GetLiquids(type: LiquidType = null): Observable<Liquid[]> {
+        if (type) {
+
+        }
+        else {
+
+        }
+
+
         const id = 'Build Number :)';
 
         const options = {
@@ -46,22 +58,7 @@ export class LiquidService {
                     ));
     }
 
-    GetAPIBuildURI(): Observable<string> {
-        const id = 'Build URI :)';
-
-        const options = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-            responseType: 'text' as 'json'
-        };
-
-        // Need to change the way caching is set by wrapping these requests in a cache
-        return this.cache.apply(id, this.http.get(environment.api + 'status/build/uri', options)
-                    .pipe(
-                        map(result => result as string),
-                        tap(
-                            data => { },
-                            error => this.errorHandler.HandleError(error, null)
-                        )
-                    ));
+    GetLiquid(name: string): Observable<Liquid> {
+        return null;
     }
 }

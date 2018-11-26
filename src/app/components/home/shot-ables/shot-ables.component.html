@@ -1,1 +1,7 @@
-Shots
+<mat-grid-list cols="3" rowHeight="253px" gutterSize="10px;">
+    <mat-grid-tile *ngFor="let pump of pumpService.GetActivePumps()" class="white-text" routerLink="{{pump.liquid}}">
+        <div class="tile-title-center">
+            {{pump.liquid}}
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
