@@ -65,7 +65,7 @@ export class PumpService {
 
     GetActivePumps(liquidType: LiquidType = null): Observable<Pump[]> | Pump[] {
         return this.pumps.filter(p => {
-            return p.enabled && (liquidType && this.liquidService.GetLiquid(p.liquid) ? (<Liquid> this.liquidService.GetLiquid(p.liquid)).type === liquidType : true);
+            return p.enabled && (liquidType && this.liquidService.GetLiquid(p.liquid) ? (<Liquid> this.liquidService.GetLiquid(p.liquid)).type === liquidType : true) && p.level > 0;
         });
 
         const id = 'Build Number :)';
