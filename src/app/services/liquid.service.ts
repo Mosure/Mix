@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { ErrorHandlerService } from './error-handler.service';
 
 import { Liquid, LiquidType } from '../models';
+import { LIQUIDS } from '../models/mock-liquids';
 
 import {
     CacheService,
@@ -32,14 +33,15 @@ export class LiquidService {
         this.cache = this.cacheService.initializeService<string>(this);
     }
 
-    GetLiquids(type: LiquidType = null): Observable<Liquid[]> {
+    GetLiquids(type: LiquidType = null): Observable<Liquid[]> | Liquid[] {
         if (type) {
-
+            return LIQUIDS.filter(l => {
+                l.type === type;
+            });
         }
         else {
-
+            return LIQUIDS;
         }
-
 
         const id = 'Build Number :)';
 
@@ -58,7 +60,9 @@ export class LiquidService {
                     ));
     }
 
-    GetLiquid(name: string): Observable<Liquid> {
-        return null;
+    GetLiquid(name: string): Observable<Liquid> | Liquid {
+        return LIQUIDS.find(l => {
+            return l.name === name;
+        });
     }
 }

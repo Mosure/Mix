@@ -1,0 +1,12 @@
+.pump-quick-status {
+    height: 32px;
+    width: 100%;
+    background: #121212;
+}
+
+.right-icon {
+    color: #ffffff;
+    float: right;
+    margin-right: 10px;
+    font-size: 14px;
+}

@@ -9,6 +9,7 @@ mat-grid-tile {
     bottom: 0px;
     height: 32px;
     width: 100%;
+    line-height: 32px;
 }
 
 .tile-title {

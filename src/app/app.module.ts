@@ -27,6 +27,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { LockDialogComponent } from './components/nav-bar/lock-dialog/lock-dialog.component';
 import { UnlockDialogComponent } from './components/nav-bar/unlock-dialog/unlock-dialog.component';
 
+import { PumpQuickStatusComponent } from './components/shared/pump-quick-status.component.html/pump-quick-status.component';
+
 import {
   CacheService,
   ErrorHandlerService,
@@ -54,7 +56,9 @@ import {
 
     NavBarComponent,
     LockDialogComponent,
-    UnlockDialogComponent
+    UnlockDialogComponent,
+
+    PumpQuickStatusComponent
   ],
   imports: [
     AppMaterialModule,

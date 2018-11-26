@@ -16,7 +16,8 @@ import {
     Cache
 } from './cache.service';
 
-import { Pump } from '../models/pump';
+import { Pump, LiquidType, Liquid } from '../models';
+import { LiquidService } from './liquid.service';
 
 @Injectable()
 export class PumpService {
@@ -27,6 +28,7 @@ export class PumpService {
     constructor(
         private errorHandler: ErrorHandlerService,
         private cacheService: CacheService,
+        private liquidService: LiquidService,
         private http: HttpClient) {
 
         this.cache = this.cacheService.initializeService<string>(this);
@@ -51,9 +53,19 @@ export class PumpService {
         this.pumps.push(newPump2);
     }
 
-    GetActivePumps(): Observable<Pump[]> | Pump[] {
+    GetPump(id: string): Observable<Pump> | Pump {
+        for (const pump of this.pumps) {
+            if (pump.id === id) {
+                return pump;
+            }
+        }
+
+        return null;
+    }
+
+    GetActivePumps(liquidType: LiquidType = null): Observable<Pump[]> | Pump[] {
         return this.pumps.filter(p => {
-            return p.enabled;
+            return p.enabled && (liquidType && this.liquidService.GetLiquid(p.liquid) ? (<Liquid> this.liquidService.GetLiquid(p.liquid)).type === liquidType : true);
         });
 
         const id = 'Build Number :)';

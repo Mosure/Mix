@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { PumpService } from '../../../services';
+import { LiquidType } from '../../../models';
 
 @Component({
   selector: 'shot-ables',
@@ -8,7 +9,9 @@ import { PumpService } from '../../../services';
   styleUrls: ['./shot-ables.component.css']
 })
 export class ShotAblesComponent {
-  constructor(public pumpService: PumpService) {
+  shotable = <string>LiquidType.Shotable;
 
+  constructor(public pumpService: PumpService) {
+    
   }
 }
