@@ -10,3 +10,8 @@
     background: #212121;
     color: #ffffff;
 }
+
+span:focus {
+    outline: none;
+    border: 0;
+}
