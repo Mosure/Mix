@@ -8,10 +8,8 @@
         <span routerLink="/shots" *ngIf="router.isActive('/shots', false)">Alcohol</span>
         <span routerLink="/syrups" *ngIf="router.isActive('/syrups', false)">Syrup</span>
         <span routerLink="/mixers" *ngIf="router.isActive('/mixers', false)">Mixers</span>
-        <span routerLink="/recipes" *ngIf="router.isActive('/recipes', false) && !router.isActive('/recipes/database', false)">Recipes</span>
-        <span *ngIf="router.isActive('/recipes/database', false)">Recipe Editor</span>
+        <span routerLink="/recipes" *ngIf="router.isActive('/recipes', false)">Recipes</span>
         <span *ngIf="router.isActive('/status', false)">Status</span>
-        <span *ngIf="router.isActive('/liquids', false)">Liquid DB</span>
         <span *ngIf="router.isActive('/pumps', false)">System Setup</span>
         <span class="toolbar-spacer"></span>
         <button [matMenuTriggerFor]="notifications" *ngIf="lowPumps && lowPumps.length > 0" mat-icon-button>
@@ -32,14 +30,6 @@
             <button routerLink="/status" mat-menu-item>
                 <mat-icon>opacity</mat-icon>
                 <span>Contents Status</span>
-            </button>
-            <button routerLink="/recipes/database" *ngIf="!lockService.isLocked()" mat-menu-item>
-                <mat-icon>dashboard</mat-icon>
-                <span>Recipe Editor</span>
-            </button>
-            <button routerLink="/liquids" *ngIf="!lockService.isLocked()" mat-menu-item>
-                <mat-icon>list</mat-icon>
-                <span>Liquid Database</span>
             </button>
             <button routerLink="/pumps" *ngIf="!lockService.isLocked()" mat-menu-item>
                 <mat-icon>settings</mat-icon>

@@ -29,6 +29,24 @@ export class PumpService {
 
         this.cache = this.cacheService.initializeService<string>(this);
     }
+
+    HardwareEnabled(): Observable<boolean> {
+        const id = 'HardwareEnabled'
+
+        const options = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+            responseType: 'text' as 'json'
+        };
+
+        return this.cache.apply(id, this.http.get(environment.api + 'hardware_online', options)
+                    .pipe(
+                        map(result => JSON.parse(<string> result)['result'] as boolean),
+                        tap(
+                            data => { },
+                            error => this.errorHandler.HandleError(error, null)
+                        )
+                    ));
+    }
     
     GetPumps(): Observable<Pump[]> {
         const id = 'GetPumps';

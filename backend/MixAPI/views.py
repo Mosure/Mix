@@ -5,7 +5,13 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 
 from MixAPI.models import Pump, Component, Liquid, Recipe
+import Mix.settings as settings
 
+
+@api_view(['GET'])
+def hardware_online(request):
+    # Use this to check whether or not motor/valve control is enabled
+    return JsonResponse({'result': settings.HARDWARE_ENABLED}, status=200)
 
 @api_view(['GET'])
 def get_pumps(request):

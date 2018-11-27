@@ -9,8 +9,6 @@ import { ManualDispenseComponent } from './components/dispense/manual-dispense/m
 import { RecipesComponent } from './components/home/recipes/recipes.component';
 import { RecipeComponent } from './components/dispense/recipe/recipe.component';
 import { LiquidStatusComponent } from './components/liquid-status/liquid-status.component';
-import { LiquidDatabaseComponent } from './components/liquid-database/liquid-database.component';
-import { RecipeDatabaseComponent } from './components/recipe-database/recipe-database.component';
 import { PumpSetupComponent } from './components/pump-setup/pump-setup.component';
 import { DispenseComponent } from './components/dispense/dispense.component';
 import { SyrupsComponent } from './components/home/syrups/syrups.component';
@@ -51,10 +49,6 @@ const appRoutes: Routes = [
             component: RecipesComponent
           },
           {
-            path: 'database',
-            component: RecipeDatabaseComponent
-          },
-          {
             path: ':id',
             component: DispenseComponent
           }
@@ -76,10 +70,6 @@ const appRoutes: Routes = [
     {
       path: 'status',
       component: LiquidStatusComponent
-    },
-    {
-      path: 'liquids',
-      component: LiquidDatabaseComponent
     },
     {
       path: 'pumps',
