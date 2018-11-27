@@ -12,6 +12,8 @@ import { LiquidStatusComponent } from './components/liquid-status/liquid-status.
 import { LiquidDatabaseComponent } from './components/liquid-database/liquid-database.component';
 import { RecipeDatabaseComponent } from './components/recipe-database/recipe-database.component';
 import { PumpSetupComponent } from './components/pump-setup/pump-setup.component';
+import { DispenseComponent } from './components/dispense/dispense.component';
+import { SyrupsComponent } from './components/home/syrups/syrups.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -24,7 +26,7 @@ const appRoutes: Routes = [
           },
           {
             path: ':id',
-            component: PresetDispenseComponent
+            component: DispenseComponent
           }
         ]
     },
@@ -37,7 +39,7 @@ const appRoutes: Routes = [
           },
           {
             path: ':id',
-            component: ManualDispenseComponent
+            component: DispenseComponent
           }
         ]
     },
@@ -54,9 +56,22 @@ const appRoutes: Routes = [
           },
           {
             path: ':id',
-            component: RecipeComponent
+            component: DispenseComponent
           }
         ]
+    },
+    {
+      path: 'syrups',
+      children: [
+        {
+          path: '',
+          component: SyrupsComponent
+        },
+        {
+          path: ':id',
+          component: DispenseComponent
+        }
+      ]
     },
     {
       path: 'status',

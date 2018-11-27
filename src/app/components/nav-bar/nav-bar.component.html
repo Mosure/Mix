@@ -4,11 +4,11 @@
             <mat-icon *ngIf="router.url !== '/'">arrow_back</mat-icon>
             <mat-icon *ngIf="router.url === '/'">home</mat-icon>
         </button>
-        <span class="toolbar-title" routerLink="/">Mix</span>
+        <span routerLink="/" class="toolbar-title">Mix</span>
         <mat-icon *ngIf="router.url !== '/'">chevron_right</mat-icon>
-        <span *ngIf="router.isActive('/shots', false)">Shots</span>
-        <span *ngIf="router.isActive('/mixers', false)">Mixers</span>
-        <span *ngIf="router.isActive('/recipes', false) && !router.isActive('/recipes/database', false)">Recipes</span>
+        <span routerLink="/shots" *ngIf="router.isActive('/shots', false)">Shots</span>
+        <span routerLink="/mixers" *ngIf="router.isActive('/mixers', false)">Mixers</span>
+        <span routerLink="/recipes" *ngIf="router.isActive('/recipes', false) && !router.isActive('/recipes/database', false)">Recipes</span>
         <span *ngIf="router.isActive('/recipes/database', false)">Recipe Editor</span>
         <span *ngIf="router.isActive('/status', false)">Status</span>
         <span *ngIf="router.isActive('/liquids', false)">Liquid DB</span>
