@@ -39,21 +39,21 @@ export class PumpService {
         newPump.level = 10;
         newPump.volume = 100;
         newPump.liquid = 'Sprite';
-        newPump.id = '1';
+        newPump.id = 1;
         newPump.enabled = true;
 
         let newPump2 = new Pump();
         newPump2.level = 50;
         newPump2.volume = 100;
         newPump2.liquid = 'Vodka';
-        newPump2.id = '2';
+        newPump2.id = 2;
         newPump2.enabled = true;
 
         this.pumps.push(newPump);
         this.pumps.push(newPump2);
     }
 
-    GetPump(id: string): Observable<Pump> | Pump {
+    GetPump(id: number): Observable<Pump> | Pump {
         for (const pump of this.pumps) {
             if (pump.id === id) {
                 return pump;

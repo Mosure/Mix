@@ -1,6 +1,6 @@
 
 export class Pump {
-    id: string;
+    id: number;
     liquid: string;
     volume: number;
     level: number;
