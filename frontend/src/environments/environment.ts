@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 	useCaching: true,
-  api: 'http://172.16.0.20:8000/api/',
+  api: 'http://172.16.0.20:8001/api/',
 };
 
 /*

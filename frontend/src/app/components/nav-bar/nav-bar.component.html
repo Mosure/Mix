@@ -1,11 +1,12 @@
-<mat-toolbar class="toolbar">
+<mat-toolbar [ngStyle]="{ 'background': errorHandlerService.hasError ? '#4b0000' : '#212121' }" class="toolbar">
     <mat-toolbar-row>
         <button routerLink="/" mat-icon-button>
             <mat-icon>home</mat-icon>
         </button>
-        <span routerLink="/" class="toolbar-title">Mix</span>
+        <span routerLink="/" class="toolbar-title">Mix{{errorHandlerService.errorMessage}}</span>
         <mat-icon *ngIf="router.url !== '/'">chevron_right</mat-icon>
-        <span routerLink="/shots" *ngIf="router.isActive('/shots', false)">Shots</span>
+        <span routerLink="/shots" *ngIf="router.isActive('/shots', false)">Alcohol</span>
+        <span routerLink="/syrups" *ngIf="router.isActive('/syrups', false)">Syrup</span>
         <span routerLink="/mixers" *ngIf="router.isActive('/mixers', false)">Mixers</span>
         <span routerLink="/recipes" *ngIf="router.isActive('/recipes', false) && !router.isActive('/recipes/database', false)">Recipes</span>
         <span *ngIf="router.isActive('/recipes/database', false)">Recipe Editor</span>
@@ -48,7 +49,7 @@
         <mat-menu #notifications="matMenu">
             <button [disabled]="lockService.isLocked()" *ngFor="let pump of lowPumps" mat-menu-item>
                 <mat-icon>info</mat-icon>
-                <span>{{pump.liquid}} #{{pump.id}} is running low ({{pump.level / pump.volume * 100}}%)</span>
+                <span>{{pump.liquid.name}} #{{pump.id}} is running low ({{pump.level / pump.volume * 100 | number:'1.0-0'}}%)</span>
             </button>
         </mat-menu>
     </mat-toolbar-row>

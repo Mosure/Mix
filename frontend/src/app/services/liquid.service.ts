@@ -42,21 +42,11 @@ export class LiquidService {
 
         return this.cache.apply(id, this.http.get(environment.api + 'liquids', options)
                     .pipe(
-                        map(result => JSON.parse(<string> result)['result'] as Liquid[]),
+                        map((result) => JSON.parse(<string> result)['result'] as Liquid[]),
                         tap(
                             data => {  },
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
-    }
-
-    GetLiquid(name: string): Liquid {
-        let toReturn: Liquid;
-
-        this.GetLiquids().subscribe((result) => {
-            toReturn = result.find(p => p.name === name);
-        });
-
-        return toReturn;
     }
 }

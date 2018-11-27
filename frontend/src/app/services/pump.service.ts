@@ -69,16 +69,4 @@ export class PumpService {
 
         return toReturn;
     }
-
-    GetLowPumps(): Pump[] {
-        const threshold = 0.1;
-
-        let toReturn = [];
-
-        this.GetPumps().subscribe((result) => {
-            toReturn = result.filter(p => p.enabled && p.level / p.volume <= threshold);
-        });
-
-        return toReturn;
-    }
 }
