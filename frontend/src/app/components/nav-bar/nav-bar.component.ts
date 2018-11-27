@@ -32,7 +32,10 @@ export class NavBarComponent {
 
   lock() {
     const dialogRef = this.dialog.open(LockDialogComponent, {
-      width: '300px'
+      width: '300px',
+      position: {
+        top: '118px'
+      }
     })
 
     dialogRef.afterClosed().subscribe(result => {
