@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import 'rxjs';
-
-import { map, tap } from 'rxjs/operators';
+import { find, filter, map, tap, switchMap, zip } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -23,8 +21,6 @@ import { LiquidService } from './liquid.service';
 export class PumpService {
     private cache: Cache<any>;
 
-    pumps: Pump[];
-    
     constructor(
         private errorHandler: ErrorHandlerService,
         private cacheService: CacheService,
@@ -32,68 +28,56 @@ export class PumpService {
         private http: HttpClient) {
 
         this.cache = this.cacheService.initializeService<string>(this);
-
-        this.pumps = new Array<Pump>();
-
-        let newPump = new Pump();
-        newPump.level = 10;
-        newPump.volume = 100;
-        newPump.liquid = 'Sprite';
-        newPump.id = 1;
-        newPump.enabled = true;
-
-        let newPump2 = new Pump();
-        newPump2.level = 50;
-        newPump2.volume = 100;
-        newPump2.liquid = 'Vodka';
-        newPump2.id = 2;
-        newPump2.enabled = true;
-
-        this.pumps.push(newPump);
-        this.pumps.push(newPump2);
     }
-
-    GetPump(id: number): Observable<Pump> | Pump {
-        for (const pump of this.pumps) {
-            if (pump.id === id) {
-                return pump;
-            }
-        }
-
-        return null;
-    }
-
-    GetActivePumps(liquidType: LiquidType = null): Observable<Pump[]> | Pump[] {
-        return this.pumps.filter(p => {
-            return p.enabled && (liquidType && this.liquidService.GetLiquid(p.liquid) ? (<Liquid> this.liquidService.GetLiquid(p.liquid)).type === liquidType : true) && p.level > 0;
-        });
-
-        const id = 'Build Number :)';
+    
+    GetPumps(): Observable<Pump[]> {
+        const id = 'GetPumps';
 
         const options = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
             responseType: 'text' as 'json'
         };
 
-        return this.cache.apply(id, this.http.get(environment.api + 'status/build', options)
+        return this.cache.apply(id, this.http.get(environment.api + 'pumps', options)
                     .pipe(
-                        map(result => result as string),
+                        map(result => JSON.parse(<string> result)['result'] as Pump[]),
                         tap(
-                            data => {  },
+                            data => { },
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
     }
 
-    GetLowPumps(): Observable<Pump[]> | Pump[] {
+    GetPump(id: number): Pump {
+        let toReturn: Pump;
+
+        this.GetPumps().subscribe((result) => {
+            toReturn = result.find(p => p.id === id);
+        });
+
+        return toReturn;
+    }
+
+    GetActivePumps(liquidType: LiquidType = null): Pump[] {
         const threshold = 0.1;
+
         let toReturn = [];
 
-        for (const pump of this.pumps) {
-            if (pump.enabled && pump.level / pump.volume <= threshold) {
-                toReturn.push(pump);
-            }
-        }
+        this.GetPumps().subscribe((result) => {
+            toReturn = result.filter(p => p.enabled && (liquidType ? p.liquid.type === liquidType : true) && p.level > 0);
+        });
+
+        return toReturn;
+    }
+
+    GetLowPumps(): Pump[] {
+        const threshold = 0.1;
+
+        let toReturn = [];
+
+        this.GetPumps().subscribe((result) => {
+            toReturn = result.filter(p => p.enabled && p.level / p.volume <= threshold);
+        });
 
         return toReturn;
     }

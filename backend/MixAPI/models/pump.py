@@ -7,3 +7,6 @@ class Pump(models.Model):
     level = models.IntegerField(default=0)
     has_check_valve = models.BooleanField(default=False)
     enabled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.liquid.name + ' - Pump #' + str(self.id) + ' - ' + str(self.level) + '/' + str(self.volume)

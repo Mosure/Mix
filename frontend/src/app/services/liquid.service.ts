@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs';
 
-import { map, tap } from 'rxjs/operators';
+import { filter, switchMap, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 import { ErrorHandlerService } from './error-handler.service';
 
 import { Liquid, LiquidType } from '../models';
-import { LIQUIDS } from '../models/mock-liquids';
 
 import {
     CacheService,
@@ -33,26 +32,17 @@ export class LiquidService {
         this.cache = this.cacheService.initializeService<string>(this);
     }
 
-    GetLiquids(type: LiquidType = null): Observable<Liquid[]> | Liquid[] {
-        if (type) {
-            return LIQUIDS.filter(l => {
-                l.type === type;
-            });
-        }
-        else {
-            return LIQUIDS;
-        }
-
-        const id = 'Build Number :)';
+    GetLiquids(type: LiquidType = null): Observable<Liquid[]> {
+        const id = 'GetLiquids';
 
         const options = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
             responseType: 'text' as 'json'
         };
 
-        return this.cache.apply(id, this.http.get(environment.api + 'status/build', options)
+        return this.cache.apply(id, this.http.get(environment.api + 'liquids', options)
                     .pipe(
-                        map(result => result as string),
+                        map(result => JSON.parse(<string> result)['result'] as Liquid[]),
                         tap(
                             data => {  },
                             error => this.errorHandler.HandleError(error, null)
@@ -60,9 +50,13 @@ export class LiquidService {
                     ));
     }
 
-    GetLiquid(name: string): Observable<Liquid> | Liquid {
-        return LIQUIDS.find(l => {
-            return l.name === name;
+    GetLiquid(name: string): Liquid {
+        let toReturn: Liquid;
+
+        this.GetLiquids().subscribe((result) => {
+            toReturn = result.find(p => p.name === name);
         });
+
+        return toReturn;
     }
 }

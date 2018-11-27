@@ -9,7 +9,7 @@ import { LiquidType } from '../../../models';
   styleUrls: ['./syrups.component.css']
 })
 export class SyrupsComponent {
-  syrups = <string>LiquidType.Syrup;
+  syrup = <string>LiquidType.Syrup;
 
   constructor(public pumpService: PumpService) {
     

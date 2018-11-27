@@ -3,9 +3,9 @@ from django.db import models
 
 class Liquid(models.Model):
     LiquidType = (
-        ('Shotable', 'SHOTABLE'),
-        ('Mixer', 'MIXER'),
-        ('Syrup', 'SYRUP')
+        ('SHOTABLE', 'SHOTABLE'),
+        ('MIXER', 'MIXER'),
+        ('SYRUP', 'SYRUP')
     )
 
     name = models.CharField(max_length=256, primary_key=True, unique=True)

@@ -1,7 +1,8 @@
+import { Liquid } from './liquid';
 
 export class Pump {
     id: number;
-    liquid: string;
+    liquid: Liquid;
     volume: number;
     level: number;
     hasCheckValve: boolean;

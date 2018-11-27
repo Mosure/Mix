@@ -25,8 +25,7 @@ SECRET_KEY = 'oreis@2hx80$krz8g@&1&v=ze80lh#jg^$h!&xl!k8_54(4vd='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,10 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MixAPI.apps.MixapiConfig'
+    'MixAPI.apps.MixapiConfig',
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Mix.wsgi.application'
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

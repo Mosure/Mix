@@ -3,8 +3,8 @@ from django.db import models
 
 class Component(models.Model):
     Unit = (
-        ('Milliliters', 'mL'),
-        ('Shot', 'shot')
+        ('mL', 'mL'),
+        ('shot', 'shot')
     )
 
     liquid = models.ForeignKey('Liquid', on_delete=models.PROTECT)
