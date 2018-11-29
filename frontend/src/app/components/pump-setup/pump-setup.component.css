@@ -47,6 +47,12 @@ mat-grid-list {
     color: #ffffff;
 }
 
+.block {
+    position: absolute;
+    right: 32px;
+    top: 10px;
+}
+
 .pump-number {
     position: absolute;
     left: 10px;
