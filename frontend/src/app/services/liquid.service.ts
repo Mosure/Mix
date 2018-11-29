@@ -50,17 +50,21 @@ export class LiquidService {
                     ));
     }
 
-    GetActiveLiquids(liquidType: LiquidType = null): Liquid[] {
-        const pumps = this.pumpService.GetActivePumps(liquidType);
+    GetActiveLiquids(liquidType: LiquidType = null): Observable<Liquid[]> {
+        return this.pumpService.GetActivePumps(liquidType).pipe(
+            map(
+                pumps => {
+                    let toReturn = [];
 
-        let toReturn = [];
+                    for (const pump of pumps) {
+                        if (!toReturn.find(p => p.name === pump.liquid.name)) {
+                            toReturn.push(pump.liquid);
+                        }
+                    }
 
-        for (const pump of pumps) {
-            if (!toReturn.find(p => p.name === pump.liquid.name)) {
-                toReturn.push(pump.liquid);
-            }
-        }
-
-        return toReturn;
+                    return toReturn;
+                }
+            )
+        )
     }
 }

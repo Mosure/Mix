@@ -9,11 +9,11 @@
         <span routerLink="/syrups" *ngIf="router.isActive('/syrups', false)">Syrup</span>
         <span routerLink="/mixers" *ngIf="router.isActive('/mixers', false)">Mixers</span>
         <span routerLink="/recipes" *ngIf="router.isActive('/recipes', false)">Recipes</span>
-        <span *ngIf="router.isActive('/status', false)">Status</span>
-        <span *ngIf="router.isActive('/pumps', false)">System Setup</span>
+        <span routerLink="/status" *ngIf="router.isActive('/status', false)">Status</span>
+        <span routerLink="/pumps" *ngIf="router.isActive('/pumps', false)">System Setup</span>
         <span class="toolbar-spacer"></span>
-        <button [matMenuTriggerFor]="notifications" *ngIf="lowPumps && lowPumps.length > 0" mat-icon-button>
-            <mat-icon [matBadge]="lowPumps.length" matBadgeColor="warn">notification_important</mat-icon>
+        <button [matMenuTriggerFor]="notifications" *ngIf="(pumpService.GetLowPumps() | async) && (pumpService.GetLowPumps() | async).length" mat-icon-button>
+            <mat-icon [matBadge]="(pumpService.GetLowPumps() | async).length" matBadgeColor="warn">notification_important</mat-icon>
         </button>
         <button [matMenuTriggerFor]="menu" mat-icon-button>
             <mat-icon>more_vert</mat-icon>
@@ -37,7 +37,7 @@
             </button>
         </mat-menu>
         <mat-menu #notifications="matMenu">
-            <button [disabled]="lockService.isLocked()" *ngFor="let pump of lowPumps" mat-menu-item>
+            <button routerLink="/pumps/{{pump.id}}" [disabled]="lockService.isLocked()" *ngFor="let pump of pumpService.GetLowPumps() | async" mat-menu-item>
                 <mat-icon>info</mat-icon>
                 <span>{{pump.liquid.name}} #{{pump.id}} is running low ({{pump.level / pump.volume * 100 | number:'1.0-0'}}%)</span>
             </button>

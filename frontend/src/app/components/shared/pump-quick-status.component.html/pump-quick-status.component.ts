@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
 
 import { Pump } from '../../../models';
 
@@ -17,6 +17,15 @@ export class PumpQuickStatusComponent {
 
     get pump(): Pump {
       return this._pump;
+    }
+
+    _changed: EventEmitter<any>;
+    @Input()
+    set changed(changed: EventEmitter<any>) {
+      this._changed = changed;
+      this._changed.subscribe(() => {
+        this.remaining = this._pump.level / this._pump.volume * 100;
+      });
     }
 
     remaining: number;

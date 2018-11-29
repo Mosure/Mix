@@ -8,14 +8,15 @@ import { UnlockDialogComponent } from './unlock-dialog/unlock-dialog.component';
 
 import { Pump } from '../../models';
 
+import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-  lowPumps: Pump[];
-
   constructor(
     public lockService: LockService,
     private pumpService: PumpService,
@@ -23,11 +24,7 @@ export class NavBarComponent {
     public router: Router,
     public dialog: MatDialog
   ) {
-    const threshold = 0.1;
-
-    this.pumpService.GetPumps().subscribe((result) => {
-        this.lowPumps = result.filter(p => p.enabled && p.level / p.volume <= threshold);
-    });
+    
   }
 
   lock() {

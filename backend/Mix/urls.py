@@ -17,6 +17,7 @@ from MixAPI import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/pumps/', views.get_pumps),
+    path('api/pumps/update', views.update_pump),
     path('api/liquids/', views.get_liquids),
     path('api/recipes/', views.get_recipes),
     path('api/hardware_online/', views.hardware_online)

@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parent-div {
+    margin-top: 32px;
+}
+
+.tile-title-center {
+    font-size: 48px;
+    line-height: 48px;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 1.75px;
+    text-align: center;
+}
+
+.bottom-status {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+}
+
+mat-slider {
+    width: 750px;
+}
+
+.child-full-width {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-top: 96px;
+}
+
+.enabled-button {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24px;
+    color: #ffffff;
+    margin-top: 32px;
+}
+

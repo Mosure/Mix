@@ -20,6 +20,8 @@ import { Pump, LiquidType, Liquid } from '../models';
 export class PumpService {
     private cache: Cache<any>;
 
+    public threshold: number = 0.1;
+
     constructor(
         private errorHandler: ErrorHandlerService,
         private cacheService: CacheService,
@@ -64,47 +66,57 @@ export class PumpService {
                     ));
     }
 
-    GetPump(id: number): Pump {
-        let toReturn: Pump;
-
-        this.GetPumps().subscribe((result) => {
-            toReturn = result.find(p => p.id === id);
-        });
-
-        return toReturn;
+    GetActivePumps(liquidType: LiquidType = null): Observable<Pump[]> {
+        return this.GetPumps().pipe(
+            map(
+                pumps => {
+                    return pumps.filter(p => p.enabled && (liquidType ? p.liquid.type === liquidType : true) && p.level > 0);
+                }
+            )
+        );
     }
 
-    GetActivePumps(liquidType: LiquidType = null): Pump[] {
-        const threshold = 0.1;
+    GetCombinedPump(liquid: Liquid): Observable<Pump> {
+        return this.GetActivePumps(liquid.type).pipe(
+            map(
+                pumps => {
+                    let newPump = new Pump();
+                    newPump.liquid = liquid;
+                    newPump.enabled = true;
+                    newPump.level = 0;
+                    newPump.volume = 0;
 
-        let toReturn = [];
+                    for (const pump of pumps) {
+                        if (pump.liquid.name === liquid.name) {
+                            newPump.hasCheckValve = newPump.hasCheckValve || pump.hasCheckValve;
+                            newPump.level = newPump.level + pump.level;
+                            newPump.volume = newPump.volume + pump.volume;
+                        }
+                    }
 
-        this.GetPumps().subscribe((result) => {
-            toReturn = result.filter(p => p.enabled && (liquidType ? p.liquid.type === liquidType : true) && p.level > 0);
-        });
-
-        return toReturn;
-    }
-
-    GetCombinedPump(liquid: Liquid): Pump {
-        let newPump = new Pump();
-        newPump.liquid = liquid;
-        newPump.enabled = true;
-        newPump.level = 0;
-        newPump.volume = 0;
-
-        for (const pump of this.GetActivePumps(liquid.type)) {
-            if (pump.liquid.name === liquid.name) {
-                newPump.hasCheckValve = newPump.hasCheckValve || pump.hasCheckValve;
-                newPump.level = newPump.level + pump.level;
-                newPump.volume = newPump.volume + pump.volume;
-            }
-        }
-
-        return newPump;
+                    return newPump;
+                }
+            )
+        );
     }
 
     UpdatePump(pump: Pump) {
-        
+        const options = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        };
+
+        this.cache.invalidateAll();
+
+        return this.http.put(environment.api + 'pumps/update', JSON.stringify(pump), options).subscribe(() => {});
+    }
+
+    GetLowPumps(): Observable<Pump[]> {
+        return this.GetPumps().pipe(
+            map(
+                pumps => {
+                    return pumps.filter(p => p.enabled && p.level / p.volume <= this.threshold);
+                }
+            )
+        );
     }
 }

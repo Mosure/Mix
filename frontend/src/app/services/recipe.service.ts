@@ -52,31 +52,4 @@ export class RecipeService {
                         )
                     ));
     }
-
-    GetAvailableRecipes(): Recipe[] {
-        let toReturn = [];
-
-        let liquids = this.liquidService.GetActiveLiquids()
-        this.GetRecipes().subscribe((result) => {
-            toReturn = result.filter(p => {
-                for (const component of p.components) {
-                    if (liquids.find(l => l.name === component.liquid.name)) {
-                        if (this.pumpService.GetCombinedPump(component.liquid).level >= component.milliliters) {
-                            continue;
-                        }
-                        else {
-                            return false;
-                        }
-                    }
-                    else {
-                        return false;
-                    }
-                }
-
-                return true;
-            });
-        });
-
-        return toReturn;
-    }
 }

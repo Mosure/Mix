@@ -1,0 +1,31 @@
+<div class="parent-div">
+    <div *ngIf="pump" class="tile-title-center">
+        Pump #{{pump.id}} - {{pump.liquid.name}}
+    </div>
+</div>
+
+<div *ngIf="pump" class="container">
+    <div class="enabled-button">
+        <mat-slide-toggle
+            color="primary"
+            [(ngModel)]="pump.enabled"
+            (change)="save($event)">
+          Enabled
+        </mat-slide-toggle>
+    </div>
+</div>
+
+<div *ngIf="pump" class="container">
+    <div class="child-full-width">
+        <div style="font-size: 18px;">{{pump.level}} / {{pump.volume}} mL</div>
+        <mat-slider
+            min="0"
+            step="50"
+            [max]="pump.volume"
+            [(value)]="pump.level"
+            color="primary"
+            (change)="save($event)"
+        >
+        </mat-slider>
+    </div>
+</div>

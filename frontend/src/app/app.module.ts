@@ -20,6 +20,7 @@ import { RecipesComponent } from './components/home/recipes/recipes.component';
 import { RecipeComponent } from './components/dispense/recipe/recipe.component';
 import { LiquidStatusComponent } from './components/liquid-status/liquid-status.component';
 import { PumpSetupComponent } from './components/pump-setup/pump-setup.component';
+import { PumpComponent } from './components/pump-setup/pump/pump.component';
 import { SyrupsComponent } from './components/home/syrups/syrups.component';
 import { DispenseComponent } from './components/dispense/dispense.component';
 
@@ -28,6 +29,8 @@ import { LockDialogComponent } from './components/nav-bar/lock-dialog/lock-dialo
 import { UnlockDialogComponent } from './components/nav-bar/unlock-dialog/unlock-dialog.component';
 
 import { PumpQuickStatusComponent } from './components/shared/pump-quick-status.component.html/pump-quick-status.component';
+
+import { RecipeFilterPipe } from './pipes/recipe-filter.pipe';
 
 import {
   CacheService,
@@ -51,6 +54,7 @@ import {
     RecipeComponent,
     LiquidStatusComponent,
     PumpSetupComponent,
+    PumpComponent,
     SyrupsComponent,
     DispenseComponent,
 
@@ -58,7 +62,8 @@ import {
     LockDialogComponent,
     UnlockDialogComponent,
 
-    PumpQuickStatusComponent
+    PumpQuickStatusComponent,
+    RecipeFilterPipe
   ],
   imports: [
     AppRoutingModule,

@@ -1,5 +1,5 @@
 <mat-grid-list cols="3" rowHeight="253px" gutterSize="10px;">
-    <mat-grid-tile *ngFor="let recipe of this.recipeService.GetAvailableRecipes()" routerLink="{{encodeURI(recipe.name)}}">
+    <mat-grid-tile *ngFor="let recipe of this.recipeService.GetRecipes() | async | recipefilter | async" routerLink="{{encodeURI(recipe.name)}}">
         <div class="tile-title-center">
             {{recipe.name}}
         </div>

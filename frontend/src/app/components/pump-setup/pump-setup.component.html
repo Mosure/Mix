@@ -1,0 +1,15 @@
+<mat-grid-list cols="3" rowHeight="253px" gutterSize="10px;">
+    <mat-grid-tile *ngFor="let pump of pumpService.GetPumps() | async" class="white-text" routerLink="{{pump.id}}">
+        <div *ngIf="pump.level / pump.volume <= pumpService.threshold" class="notification">
+            <mat-icon color="warn">notifications</mat-icon>
+        </div>
+        <div class="pump-number">
+            {{pump.id}}
+        </div>
+        <div class="tile-title-center">
+            {{pump.liquid.name}}
+        </div>
+        <pump-quick-status class="tile-title-container" [pump]="pump"></pump-quick-status>
+    </mat-grid-tile>
+</mat-grid-list>
+    

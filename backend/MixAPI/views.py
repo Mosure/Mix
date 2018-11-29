@@ -40,7 +40,12 @@ def get_pumps(request):
 def update_pump(request):
     body = json.loads(request.body)
 
-    pass
+    pump = Pump.objects.filter(id=body['id'])[0]
+    pump.level = body['level']
+    pump.enabled = body['enabled']
+    pump.save()
+
+    return JsonResponse({}, status=200)
 
 @api_view(['GET'])
 def get_liquids(request):
