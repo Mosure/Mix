@@ -13,6 +13,9 @@ import { ErrorHandlerService } from './error-handler.service';
 
 import { Recipe } from '../models';
 
+import { LiquidService } from './liquid.service';
+import { PumpService } from './pump.service';
+
 import {
     CacheService,
     Cache
@@ -25,6 +28,8 @@ export class RecipeService {
     constructor(
         private errorHandler: ErrorHandlerService,
         private cacheService: CacheService,
+        private liquidService: LiquidService,
+        private pumpService: PumpService,
         private http: HttpClient) {
 
         this.cache = this.cacheService.initializeService<string>(this);
@@ -46,5 +51,32 @@ export class RecipeService {
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
+    }
+
+    GetAvailableRecipes(): Recipe[] {
+        let toReturn = [];
+
+        let liquids = this.liquidService.GetActiveLiquids()
+        this.GetRecipes().subscribe((result) => {
+            toReturn = result.filter(p => {
+                for (const component of p.components) {
+                    if (liquids.find(l => l.name === component.liquid.name)) {
+                        if (this.pumpService.GetCombinedPump(component.liquid).level >= component.milliliters) {
+                            continue;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+        });
+
+        return toReturn;
     }
 }

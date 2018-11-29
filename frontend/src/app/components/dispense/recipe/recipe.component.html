@@ -14,7 +14,23 @@
     <div style="width: 80px;"></div>
     <div class="child">
         <button mat-fab style="width: 200px; height: 200px; background-color: #757575;">
+            <div style="font-size: 24px;">Full</div>
             <div style="font-size: 24px;">Cup</div>
         </button>
+    </div>
+</div>
+<div class="container">
+    <div class="child-full-width">
+        <div style="font-size: 18px;">{{formatLabel(strength)}}</div>
+        <mat-slider
+            min="0"
+            tickInterval="auto"
+            step="0.1"
+            max="2"
+            [(value)]="strength"
+            color="primary"
+        >
+            
+        </mat-slider>
     </div>
 </div>

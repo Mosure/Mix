@@ -8,7 +8,8 @@ class Component(models.Model):
     )
 
     liquid = models.ForeignKey('Liquid', on_delete=models.PROTECT)
-    amount = models.IntegerField(default=0)
-    units = models.CharField(max_length=32, choices=Unit)
+    milliliters = models.IntegerField(default=0)
     recipe = models.ForeignKey('Recipe', on_delete=models.PROTECT)
     
+    def __str__(self):
+        return '(' + self.recipe.name + ') - ' + self.liquid.name

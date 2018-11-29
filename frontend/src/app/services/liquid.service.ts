@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { ErrorHandlerService } from './error-handler.service';
 
 import { Liquid, LiquidType } from '../models';
+import { PumpService } from './pump.service';
 
 import {
     CacheService,
@@ -22,11 +23,10 @@ import {
 export class LiquidService {
     private cache: Cache<any>;
 
-    private liquids: Liquid[];
-    
     constructor(
         private errorHandler: ErrorHandlerService,
         private cacheService: CacheService,
+        private pumpService: PumpService,
         private http: HttpClient) {
 
         this.cache = this.cacheService.initializeService<string>(this);
@@ -48,5 +48,19 @@ export class LiquidService {
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
+    }
+
+    GetActiveLiquids(liquidType: LiquidType = null): Liquid[] {
+        const pumps = this.pumpService.GetActivePumps(liquidType);
+
+        let toReturn = [];
+
+        for (const pump of pumps) {
+            if (!toReturn.find(p => p.name === pump.liquid.name)) {
+                toReturn.push(pump.liquid);
+            }
+        }
+
+        return toReturn;
     }
 }

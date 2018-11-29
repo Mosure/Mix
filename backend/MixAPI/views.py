@@ -68,9 +68,13 @@ def get_recipes(request):
         to_return_components = []
         for component in components:
             to_return_components.append({
-                'liquid': component.liquid.id,
-                'amount': component.amount,
-                'units': component.units,
+                'liquid': {
+                    'name': component.liquid.name,
+                    'type': component.liquid.type,
+                    'co2': component.liquid.co2,
+                    'alcohol_percentage': component.liquid.alcohol_percentage
+                },
+                'milliliters': component.milliliters,
                 'recipe': recipe.id
             })
 

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Liquid } from 'src/app/models';
+
+import { PumpService } from '../../../services';
 
 @Component({
   selector: 'manual-dispense',
@@ -6,7 +9,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./manual-dispense.component.css']
 })
 export class ManualDispenseComponent {
-  constructor() {
+  @Input('liquid')
+  liquid: Liquid;
+
+  constructor(
+    public pumpService: PumpService
+  ) {
 
   }
 }

@@ -61,14 +61,14 @@ import {
     PumpQuickStatusComponent
   ],
   imports: [
-    AppMaterialModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    AppMaterialModule
   ],
   providers: [
     CacheService,

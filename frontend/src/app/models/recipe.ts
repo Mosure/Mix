@@ -1,3 +1,4 @@
+import { Liquid } from './liquid';
 
 export class Recipe {
     id: string;
@@ -6,12 +7,6 @@ export class Recipe {
 }
 
 export class Component {
-    liquid: string;
-    amount: number;
-    units: Units;
-}
-
-export enum Units {
-    Milliliters = 'mL',
-    Shot = 'shot'
+    liquid: Liquid;
+    milliliters: number;
 }

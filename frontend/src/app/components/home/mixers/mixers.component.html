@@ -1,8 +1,8 @@
 <mat-grid-list cols="3" rowHeight="253px" gutterSize="10px;">
-    <mat-grid-tile *ngFor="let pump of pumpService.GetActivePumps(mixer)" class="white-text" routerLink="{{pump.liquid.name}}">
+    <mat-grid-tile *ngFor="let liquid of liquidService.GetActiveLiquids(mixer)" class="white-text" routerLink="{{liquid.name}}">
         <div class="tile-title-center">
-            {{pump.liquid.name}}
+            {{liquid.name}}
         </div>
-        <pump-quick-status class="tile-title-container" [pump]="pump"></pump-quick-status>
+        <pump-quick-status class="tile-title-container" [pump]="pumpService.GetCombinedPump(liquid)"></pump-quick-status>
     </mat-grid-tile>
 </mat-grid-list>

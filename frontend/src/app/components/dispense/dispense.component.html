@@ -5,13 +5,13 @@
     <div *ngIf="recipe" class="tile-title-center">
         {{recipe.name}}
     </div>
-    <manual-dispense *ngIf="liquid && liquid.type === 'MIXER'">
+    <manual-dispense [liquid]="liquid" *ngIf="liquid && liquid.type === 'MIXER'">
 
     </manual-dispense>
-    <preset-dispense *ngIf="liquid && (liquid.type === 'SHOTABLE' || liquid.type === 'SYRUP')">
+    <preset-dispense [liquid]="liquid" *ngIf="liquid && (liquid.type === 'SHOTABLE' || liquid.type === 'SYRUP')">
 
     </preset-dispense>
-    <recipe *ngIf="recipe">
+    <recipe [recipe]="recipe" *ngIf="recipe">
 
     </recipe>
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { PumpService } from '../../../services';
+import { PumpService, LiquidService } from '../../../services';
 import { LiquidType } from '../../../models';
 
 @Component({
@@ -11,7 +11,10 @@ import { LiquidType } from '../../../models';
 export class MixersComponent {
   mixer = <string>LiquidType.Mixer;
 
-  constructor(public pumpService: PumpService) {
+  constructor(
+    public pumpService: PumpService,
+    public liquidService: LiquidService
+  ) {
     
   }
 }

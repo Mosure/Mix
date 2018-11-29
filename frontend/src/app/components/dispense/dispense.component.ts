@@ -27,11 +27,11 @@ export class DispenseComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.liquidService.GetLiquids().subscribe((result) => {
-        this.liquid = result.find(p => p.name === params.get('id'));
+        this.liquid = result.find(p => p.name === decodeURI(params.get('id')));
       });
       
       this.recipeService.GetRecipes().subscribe((result) => {
-        this.recipe = result.find(p => p.name === params.get('id'));
+        this.recipe = result.find(p => p.name === decodeURI(params.get('id')));
       });
     });
   }

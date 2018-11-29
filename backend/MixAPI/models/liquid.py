@@ -12,3 +12,6 @@ class Liquid(models.Model):
     co2 = models.BooleanField(default=False)
     alcohol_percentage = models.FloatField()
     type = models.CharField(max_length=32, choices=LiquidType)
+
+    def __str__(self):
+        return self.name

@@ -15,7 +15,6 @@ import {
 } from './cache.service';
 
 import { Pump, LiquidType, Liquid } from '../models';
-import { LiquidService } from './liquid.service';
 
 @Injectable()
 export class PumpService {
@@ -24,7 +23,6 @@ export class PumpService {
     constructor(
         private errorHandler: ErrorHandlerService,
         private cacheService: CacheService,
-        private liquidService: LiquidService,
         private http: HttpClient) {
 
         this.cache = this.cacheService.initializeService<string>(this);
@@ -86,6 +84,24 @@ export class PumpService {
         });
 
         return toReturn;
+    }
+
+    GetCombinedPump(liquid: Liquid): Pump {
+        let newPump = new Pump();
+        newPump.liquid = liquid;
+        newPump.enabled = true;
+        newPump.level = 0;
+        newPump.volume = 0;
+
+        for (const pump of this.GetActivePumps(liquid.type)) {
+            if (pump.liquid.name === liquid.name) {
+                newPump.hasCheckValve = newPump.hasCheckValve || pump.hasCheckValve;
+                newPump.level = newPump.level + pump.level;
+                newPump.volume = newPump.volume + pump.volume;
+            }
+        }
+
+        return newPump;
     }
 
     UpdatePump(pump: Pump) {

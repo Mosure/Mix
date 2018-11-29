@@ -1,0 +1,40 @@
+mat-grid-tile {
+    background: #212121;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.tile-title-container {
+    position: absolute;
+    bottom: 0px;
+    height: 32px;
+    width: 100%;
+}
+
+.tile-title {
+    font-size: 22px;
+    line-height: 32px;
+    color: #ffffff;
+    font-weight: bold;
+    float: right;
+    margin-right: 10px;
+    letter-spacing: 1.75px;
+}
+
+.tile-title-center {
+    font-size: 22px;
+    line-height: 32px;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 1.75px;
+}
+
+mat-grid-list {
+    height: calc(100% - 64px - 10px);
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.white-text {
+    color: #ffffff;
+}
