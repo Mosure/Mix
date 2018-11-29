@@ -87,4 +87,8 @@ export class PumpService {
 
         return toReturn;
     }
+
+    UpdatePump(pump: Pump) {
+        
+    }
 }

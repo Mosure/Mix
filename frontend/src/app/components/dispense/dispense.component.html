@@ -1,22 +1,17 @@
-<mat-grid-list *ngIf="liquid" cols="3" rowHeight="253px" gutterSize="10px;">
-    <mat-grid-tile>
-        
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div class="tile-title-center">
-            {{liquid.name}}
-        </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
+<div class="parent-div">
+    <div *ngIf="liquid" class="tile-title-center">
+        {{liquid.name}}
+    </div>
+    <div *ngIf="recipe" class="tile-title-center">
+        {{recipe.name}}
+    </div>
+    <manual-dispense *ngIf="liquid && liquid.type === 'MIXER'">
 
-    </mat-grid-tile>
-    <mat-grid-tile>
+    </manual-dispense>
+    <preset-dispense *ngIf="liquid && (liquid.type === 'SHOTABLE' || liquid.type === 'SYRUP')">
 
-    </mat-grid-tile>
-    <mat-grid-tile>
+    </preset-dispense>
+    <recipe *ngIf="recipe">
 
-    </mat-grid-tile>
-    <mat-grid-tile>
-
-    </mat-grid-tile>
-</mat-grid-list>
+    </recipe>
+</div>

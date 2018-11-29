@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { PumpService, LiquidService } from '../../services';
-import { Liquid, LiquidType } from '../../models';
+import { PumpService, LiquidService, RecipeService } from '../../services';
+import { Liquid, LiquidType, Recipe } from '../../models';
 
 @Component({
   selector: 'dispense',
@@ -13,10 +13,12 @@ export class DispenseComponent implements OnInit {
   syrups = <string>LiquidType.Syrup;
 
   liquid: Liquid;
+  recipe: Recipe;
 
   constructor(
     public pumpService: PumpService,
     public liquidService: LiquidService,
+    public recipeService: RecipeService,
     private route: ActivatedRoute
   ) {
     
@@ -26,6 +28,10 @@ export class DispenseComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.liquidService.GetLiquids().subscribe((result) => {
         this.liquid = result.find(p => p.name === params.get('id'));
+      });
+      
+      this.recipeService.GetRecipes().subscribe((result) => {
+        this.recipe = result.find(p => p.name === params.get('id'));
       });
     });
   }

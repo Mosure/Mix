@@ -27,7 +27,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-HARDWARE_ENABLED = os.environ['MIX__HARDWARE_ENABLED'] if 'MIX__HARDWARE_ENABLED' in os.environ else False
+if 'MIX__HARDWARE_ENABLED' in os.environ:
+    HARDWARE_ENABLED = os.environ['MIX__HARDWARE_ENABLED']
+else:
+    HARDWARE_ENABLED = False
 
 # Application definition
 
