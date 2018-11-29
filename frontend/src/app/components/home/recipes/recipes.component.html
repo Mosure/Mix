@@ -1,9 +1,7 @@
 <mat-grid-list cols="3" rowHeight="253px" gutterSize="10px;">
-    <mat-grid-tile [style.background-image]="encodeBackground('assets/recipes/' + recipe.name + '.jpg')" *ngFor="let recipe of this.recipeService.GetAvailableRecipes()" routerLink="{{encodeURI(recipe.name)}}">
-        <div class="tile-title-container">
-            <div class="tile-title">
-                {{recipe.name}}
-            </div>
+    <mat-grid-tile *ngFor="let recipe of this.recipeService.GetAvailableRecipes()" routerLink="{{encodeURI(recipe.name)}}">
+        <div class="tile-title-center">
+            {{recipe.name}}
         </div>
     </mat-grid-tile>
 </mat-grid-list>

@@ -17,7 +17,7 @@ def hardware_online(request):
 def get_pumps(request):
     to_return = []
 
-    for pump in Pump.objects.all():
+    for pump in Pump.objects.all().order_by('id'):
         to_add = {
             'id': pump.id,
             'liquid': {
@@ -46,7 +46,7 @@ def update_pump(request):
 def get_liquids(request):
     to_return = []
 
-    for liquid in Liquid.objects.all():
+    for liquid in Liquid.objects.all().order_by('name'):
         to_add = {
             'name': liquid.name,
             'type': liquid.type,
@@ -62,7 +62,7 @@ def get_liquids(request):
 def get_recipes(request):
     to_return = []
 
-    for recipe in Recipe.objects.all():
+    for recipe in Recipe.objects.all().order_by('name'):
         components = Component.objects.filter(recipe=recipe)
 
         to_return_components = []

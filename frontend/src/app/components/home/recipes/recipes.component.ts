@@ -15,17 +15,12 @@ export class RecipesComponent {
     public recipeService: RecipeService,
     public pumpService: PumpService,
     public liquidService: LiquidService,
-    private sanitization: DomSanitizer
+    public sanitization: DomSanitizer
   ) {
     
   }
 
-  encodeBackground(uri: string) {
-    return this.sanitization.bypassSecurityTrustStyle(`url(${uri})`);
-  }
-
   encodeURI(uri: string) {
-    console.log(encodeURI(uri));
     return encodeURI(uri);
   }
 
