@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
 	useCaching: true,
-  api: 'http://172.16.0.20:8001/api/',
+  api: 'http://mix.home.lan:8001/api/',
 };
 
 /*
