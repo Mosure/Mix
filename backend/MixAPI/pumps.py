@@ -11,8 +11,8 @@ ENABLE_PIN = 5
 DIRECTION_PIN = 6
 PULSE_PIN = 13
 CRITICAL_DELAY = 500  # Microseconds
-MAX_SPEED = 500  # Microseconds per step
-RAMP_START = 1500
+MAX_SPEED = 600  # Microseconds per step
+RAMP_START = 2000
 
 def init():
     if not HARDWARE_ENABLED:
