@@ -16,7 +16,7 @@ def init():
     if not HARDWARE_ENABLED:
         return
 
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
 
     GPIO.setup(ENABLE_PIN, GPIO.OUT)  # Enable
     GPIO.setup(DIRECTION_PIN, GPIO.OUT)  # Direction
