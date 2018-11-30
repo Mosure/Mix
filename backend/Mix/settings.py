@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 try:
     import RPi.GPIO as GPIO
     HARDWARE_ENABLED = True
-except RuntimeError:
+except Exception:
     HARDWARE_ENABLED = False
     print("Hardware not enabled!")
 
