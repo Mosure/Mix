@@ -126,10 +126,10 @@ export class PumpService {
             responseType: 'text' as 'json'
         };
 
-        return this.http.get(environment.api + 'dispense', options)
+        return this.http.post(environment.api + 'dispense', options)
                     .pipe(
                         tap(
-                            data => { },
+                            data => this.cache.invalidate('GetPumps'),
                             error => this.errorHandler.HandleError(error, null)
                         )
                     );
