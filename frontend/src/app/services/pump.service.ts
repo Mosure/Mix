@@ -119,4 +119,19 @@ export class PumpService {
             )
         );
     }
+
+    DispenseLiquid() {
+        const options = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+            responseType: 'text' as 'json'
+        };
+
+        return this.http.get(environment.api + 'dispense', options)
+                    .pipe(
+                        tap(
+                            data => { },
+                            error => this.errorHandler.HandleError(error, null)
+                        )
+                    );
+    }
 }

@@ -6,6 +6,7 @@ from django.http import JsonResponse
 
 from MixAPI.models import Pump, Component, Liquid, Recipe
 import Mix.settings as settings
+import MixAPI.pumps as Pumps
 
 
 @api_view(['GET'])
@@ -93,3 +94,9 @@ def get_recipes(request):
         to_return.append(to_add)
 
     return JsonResponse({'result': to_return}, status=200)
+
+@api_view(['POST'])
+def dispense_liquid(request):
+    Pumps.pump(milliliters=100)
+
+    return JsonResponse({}, status=200)

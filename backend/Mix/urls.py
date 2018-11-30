@@ -20,5 +20,6 @@ urlpatterns = [
     path('api/pumps/update', views.update_pump),
     path('api/liquids/', views.get_liquids),
     path('api/recipes/', views.get_recipes),
-    path('api/hardware_online/', views.hardware_online)
+    path('api/hardware_online/', views.hardware_online),
+    path('api/dispense/', views.dispense_liquid)
 ]

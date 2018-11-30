@@ -27,10 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-if 'MIX__HARDWARE_ENABLED' in os.environ:
-    HARDWARE_ENABLED = os.environ['MIX__HARDWARE_ENABLED']
-else:
+try:
+    import RPi.GPIO as GPIO
+    HARDWARE_ENABLED = True
+except RuntimeError:
     HARDWARE_ENABLED = False
+    print("Hardware not enabled!")
 
 # Application definition
 
