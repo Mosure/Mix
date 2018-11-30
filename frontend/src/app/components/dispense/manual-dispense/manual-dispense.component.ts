@@ -23,6 +23,6 @@ export class ManualDispenseComponent {
   }
 
   end_dispense() {
-    this.pumpService.DispenseLiquid()
+    this.pumpService.DispenseLiquid().subscribe(() => {});
   }
 }
