@@ -17,4 +17,12 @@ export class ManualDispenseComponent {
   ) {
 
   }
+
+  start_dispense() {
+
+  }
+
+  end_dispense() {
+    this.pumpService.DispenseLiquid()
+  }
 }
