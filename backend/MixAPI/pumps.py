@@ -10,7 +10,7 @@ usleep = lambda x: time.sleep(x/1000000.0)
 ENABLE_PIN = 5
 DIRECTION_PIN = 6
 PULSE_PIN = 13
-CRITICAL_DELAY = 10000  # Microseconds
+CRITICAL_DELAY = 1000  # Microseconds
 
 def init():
     if not HARDWARE_ENABLED:
@@ -26,11 +26,15 @@ def pump(milliliters):
     if not HARDWARE_ENABLED:
         return
 
-    steps = milliliters
+    steps = abs(milliliters)
 
     # Enable the motor
-    GPIO.output(DIRECTION_PIN, GPIO.HIGH)
-    GPIO.output(ENABLE_PIN, GPIO.HIGH)
+    if milliliters > 0:
+        GPIO.output(DIRECTION_PIN, GPIO.HIGH)
+    else:
+        GPIO.output(DIRECTION_PIN, GPIO.LOW)
+
+    GPIO.output(ENABLE_PIN, GPIO.LOW)
 
     usleep(CRITICAL_DELAY)
 
@@ -39,8 +43,7 @@ def pump(milliliters):
     
     usleep(CRITICAL_DELAY)
 
-    GPIO.output(DIRECTION_PIN, GPIO.LOW)
-    GPIO.output(ENABLE_PIN, GPIO.LOW)
+    GPIO.output(ENABLE_PIN, GPIO.HIGH)
 
 def _step():
     GPIO.output(PULSE_PIN, GPIO.HIGH)
