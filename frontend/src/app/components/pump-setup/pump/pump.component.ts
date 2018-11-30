@@ -11,6 +11,7 @@ import { Pump } from '../../../models';
 })
 export class PumpComponent implements OnInit {
     pump: Pump
+    liquidName: string;
 
     constructor(
         public pumpService: PumpService,
@@ -24,6 +25,7 @@ export class PumpComponent implements OnInit {
       this.route.paramMap.subscribe((params: ParamMap) => {
         this.pumpService.GetPumps().subscribe((result) => {
             this.pump = result.find(p => p.id === parseInt(params.get('id')));
+            this.liquidName = this.pump.liquid.name;
         });
       });
     }
@@ -37,7 +39,10 @@ export class PumpComponent implements OnInit {
     }
 
     save(event: any) {
-      this.pumpService.UpdatePump(this.pump);
+      this.liquidService.GetLiquids().subscribe(liquids => {
+        this.pump.liquid = liquids.find(l => l.name === this.liquidName);
+        this.pumpService.UpdatePump(this.pump);
+      });
     }
 
 }

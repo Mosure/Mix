@@ -1,6 +1,18 @@
 <div class="parent-div">
     <div *ngIf="pump" class="tile-title-center">
-        Pump #{{pump.id}} - {{pump.liquid.name}}
+        Pump #{{pump.id}}
+    </div>
+</div>
+
+<div *ngIf="pump" class="container">
+    <div style="margin-top: 24px;">
+        <mat-form-field color="default">
+            <mat-select [(value)]="liquidName" (selectionChange)="save($event)">
+                <mat-option *ngFor="let liquid of liquidService.GetLiquids() | async" [value]="liquid.name">
+                    {{liquid.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
 </div>
 

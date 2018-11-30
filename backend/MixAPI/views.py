@@ -43,6 +43,7 @@ def update_pump(request):
     pump = Pump.objects.filter(id=body['id'])[0]
     pump.level = body['level']
     pump.enabled = body['enabled']
+    pump.liquid = Liquid.objects.filter(name=body['liquid']['name'])[0]
     pump.save()
 
     return JsonResponse({}, status=200)
