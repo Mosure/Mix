@@ -35,7 +35,7 @@ def pump(milliliters):
     if steps > RAMP_STEPS:
         steps = steps - RAMP_STEPS
         ramp_up = True
-    
+
     ramp_down = False
     if steps > RAMP_STEPS:
         steps = steps - RAMP_STEPS
