@@ -1,4 +1,5 @@
 import time
+from threading import Lock
 
 from Mix.settings import HARDWARE_ENABLED
 
@@ -15,6 +16,8 @@ MAX_SPEED = 600  # Microseconds per step
 RAMP_START = 2000
 RAMP_STEPS = 400
 
+LOCK = Lock()
+
 def init():
     if not HARDWARE_ENABLED:
         return
@@ -26,47 +29,55 @@ def init():
     GPIO.setup(PULSE_PIN, GPIO.OUT)  # Pulse
 
 def pump(milliliters):
+    global lock
+
     if not HARDWARE_ENABLED:
         return
 
-    steps = abs(milliliters)
+    if not LOCK.acquire(False):
+        return
 
-    ramp_up = False
-    if steps > RAMP_STEPS:
-        steps = steps - RAMP_STEPS
-        ramp_up = True
+    try:
+        steps = abs(milliliters)
 
-    ramp_down = False
-    if steps > RAMP_STEPS:
-        steps = steps - RAMP_STEPS
-        ramp_down = True
+        ramp_up = False
+        if steps > RAMP_STEPS:
+            steps = steps - RAMP_STEPS
+            ramp_up = True
 
-    # Enable the motor
-    if milliliters > 0:
-        GPIO.output(DIRECTION_PIN, GPIO.HIGH)
-    else:
-        GPIO.output(DIRECTION_PIN, GPIO.LOW)
+        ramp_down = False
+        if steps > RAMP_STEPS:
+            steps = steps - RAMP_STEPS
+            ramp_down = True
 
-    GPIO.output(ENABLE_PIN, GPIO.LOW)
+        # Enable the motor
+        if milliliters > 0:
+            GPIO.output(DIRECTION_PIN, GPIO.HIGH)
+        else:
+            GPIO.output(DIRECTION_PIN, GPIO.LOW)
 
-    usleep(CRITICAL_DELAY)
+        GPIO.output(ENABLE_PIN, GPIO.LOW)
 
-    if ramp_up:
-        _ramp_up()
+        usleep(CRITICAL_DELAY)
 
-    speed = RAMP_START
-    if ramp_up:
-        speed = MAX_SPEED
+        if ramp_up:
+            _ramp_up()
 
-    for i in range(steps):
-        _step(speed)
-    
-    if ramp_down:
-        _ramp_down()
-    
-    usleep(CRITICAL_DELAY)
+        speed = RAMP_START
+        if ramp_up:
+            speed = MAX_SPEED
 
-    GPIO.output(ENABLE_PIN, GPIO.HIGH)
+        for i in range(steps):
+            _step(speed)
+        
+        if ramp_down:
+            _ramp_down()
+        
+        usleep(CRITICAL_DELAY)
+
+        GPIO.output(ENABLE_PIN, GPIO.HIGH)
+    finally:
+        LOCK.release()
 
 def _step(delay):
     GPIO.output(PULSE_PIN, GPIO.HIGH)
