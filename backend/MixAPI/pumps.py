@@ -13,6 +13,7 @@ PULSE_PIN = 13
 CRITICAL_DELAY = 500  # Microseconds
 MAX_SPEED = 600  # Microseconds per step
 RAMP_START = 2000
+RAMP_STEPS = 400
 
 def init():
     if not HARDWARE_ENABLED:
@@ -31,13 +32,13 @@ def pump(milliliters):
     steps = abs(milliliters)
 
     ramp_up = False
-    if steps > 200:
-        steps = steps - 200
+    if steps > RAMP_STEPS:
+        steps = steps - RAMP_STEPS
         ramp_up = True
     
     ramp_down = False
-    if steps > 200:
-        steps = steps - 200
+    if steps > RAMP_STEPS:
+        steps = steps - RAMP_STEPS
         ramp_down = True
 
     # Enable the motor
@@ -51,7 +52,7 @@ def pump(milliliters):
     usleep(CRITICAL_DELAY)
 
     if ramp_up:
-        _ramp_up()  # Does 200 steps
+        _ramp_up()
 
     speed = RAMP_START
     if ramp_up:
@@ -61,7 +62,7 @@ def pump(milliliters):
         _step(speed)
     
     if ramp_down:
-        _ramp_down()  # Does 200 steps
+        _ramp_down()
     
     usleep(CRITICAL_DELAY)
 
@@ -77,9 +78,9 @@ def _ramp_eq(x, steps, ramp_start, ramp_end):
     return ((ramp_end - ramp_start) / steps) * x + ramp_start
 
 def _ramp_up():
-    for i in range(200):
-        _step(_ramp_eq(i, 200, RAMP_START, MAX_SPEED))
+    for i in range(RAMP_STEPS):
+        _step(_ramp_eq(i, RAMP_STEPS, RAMP_START, MAX_SPEED))
 
 def _ramp_down():
-    for i in range(200):
-        _step(_ramp_eq(i, 200, MAX_SPEED, RAMP_START))
+    for i in range(RAMP_STEPS):
+        _step(_ramp_eq(i, RAMP_STEPS, MAX_SPEED, RAMP_START))
