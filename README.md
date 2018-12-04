@@ -12,6 +12,7 @@ To start run:
 
 `
 $ cd frontend
+
 $ ng serve --host 0.0.0.0
 `
 
@@ -27,5 +28,6 @@ To start run:
 
 `
 $ cd backend
+
 $ python3 manage.py runserver 0.0.0.0:8001
 `
