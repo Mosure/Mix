@@ -10,11 +10,10 @@ Run `npm install` to install packages.
 
 To start run:
 
-`
+```
 $ cd frontend
-
 $ ng serve --host 0.0.0.0
-`
+```
 
 ## Backend
 
@@ -26,8 +25,7 @@ Do `pip3 install requirements.txt` to install requirements.
 
 To start run:
 
-`
+```
 $ cd backend
-
 $ python3 manage.py runserver 0.0.0.0:8001
-`
+```
