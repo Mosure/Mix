@@ -69,10 +69,10 @@ def pump(milliliters):
 
         for i in range(steps):
             _step(speed)
-        
+
         if ramp_down:
             _ramp_down()
-        
+
         usleep(CRITICAL_DELAY)
 
         GPIO.output(ENABLE_PIN, GPIO.HIGH)

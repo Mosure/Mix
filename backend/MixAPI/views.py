@@ -97,6 +97,6 @@ def get_recipes(request):
 
 @api_view(['POST'])
 def dispense_liquid(request):
-    Pumps.pump(milliliters=10000)
+    Pumps.pump(milliliters=-10000)
 
     return JsonResponse({}, status=200)
