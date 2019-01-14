@@ -8,12 +8,12 @@ if HARDWARE_ENABLED:
 
 usleep = lambda x: time.sleep(x/1000000.0)
 
-ENABLE_PIN = 26
+ENABLE_PIN = 17
 DIRECTION_PIN = 4
-PULSE_PIN = 17
-CRITICAL_DELAY = 1000  # Microseconds
-MAX_SPEED = 2000  # Microseconds per step
-RAMP_START = 4000
+PULSE_PIN = 26
+CRITICAL_DELAY = 500  # Microseconds
+MAX_SPEED = 600  # Microseconds per step
+RAMP_START = 2000
 RAMP_STEPS = 400
 
 LOCK = Lock()
