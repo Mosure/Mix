@@ -21,5 +21,5 @@ urlpatterns = [
     path('api/liquids/', views.get_liquids),
     path('api/recipes/', views.get_recipes),
     path('api/hardware_online/', views.hardware_online),
-    path('api/dispense', views.dispense_liquid)
+    path('api/dispense/<int:pump_id>', views.dispense_liquid)
 ]

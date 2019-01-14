@@ -12,9 +12,15 @@ ENABLE_PIN = 17
 DIRECTION_PIN = 4
 PULSE_PIN = 26
 CRITICAL_DELAY = 500  # Microseconds
-MAX_SPEED = 600  # Microseconds per step
+MAX_SPEED = 650  # Microseconds per step
 RAMP_START = 2000
 RAMP_STEPS = 400
+
+DATA = 5
+RESET = 6
+CLOCK = 12
+LATCH = 13
+OUTPUT_ENABLE = 16
 
 LOCK = Lock()
 
@@ -28,7 +34,14 @@ def init():
     GPIO.setup(DIRECTION_PIN, GPIO.OUT)  # Direction
     GPIO.setup(PULSE_PIN, GPIO.OUT)  # Pulse
 
-def pump(milliliters):
+    GPIO.setup(DATA, GPIO.OUT)  # Data
+    GPIO.setup(RESET, GPIO.OUT)  # Reset
+    GPIO.setup(CLOCK, GPIO.OUT)  # Clk
+    GPIO.setup(LATCH, GPIO.OUT)  # Latch
+    GPIO.setup(OUTPUT_ENABLE, GPIO.OUT)  # OE
+
+
+def pump(milliliters, pump_obj):
     global lock
 
     if not HARDWARE_ENABLED:
@@ -37,7 +50,12 @@ def pump(milliliters):
     if not LOCK.acquire(False):
         return
 
+    if pump_obj is None:
+        return
+
     try:
+        _set_pump(pump_obj.pin)
+
         steps = abs(milliliters)
 
         ramp_up = False
@@ -76,6 +94,8 @@ def pump(milliliters):
         usleep(CRITICAL_DELAY)
 
         GPIO.output(ENABLE_PIN, GPIO.HIGH)
+
+        _clear()
     finally:
         LOCK.release()
 
@@ -85,8 +105,57 @@ def _step(delay):
     GPIO.output(PULSE_PIN, GPIO.LOW)
     usleep(delay)
 
-def _ramp_eq(x, steps, ramp_start, ramp_end):
-    return ((ramp_end - ramp_start) / steps) * x + ramp_start
+def _set_pump(pid):
+    # We only have 24 pumps
+    if pid > 24:
+        return
+
+    _clear()
+
+    for i in reversed(range(24)):
+        if i == pid:
+            GPIO.output(DATA, GPIO.HIGH)
+        else:
+            GPIO.output(DATA, GPIO.LOW)
+
+        usleep(CRITICAL_DELAY)
+
+        GPIO.output(CLOCK, GPIO.HIGH)
+
+        usleep(CRITICAL_DELAY)
+
+        GPIO.output(CLOCK, GPIO.LOW)
+        GPIO.output(DATA, GPIO.LOW)
+
+        usleep(CRITICAL_DELAY)
+
+    GPIO.output(LATCH, GPIO.HIGH)
+
+    usleep(CRITICAL_DELAY)
+
+    GPIO.output(LATCH, GPIO.LOW)
+
+    usleep(CRITICAL_DELAY)
+
+    GPIO.output(OUTPUT_ENABLE, GPIO.HIGH)
+
+def _clear():
+    GPIO.output(OUTPUT_ENABLE, GPIO.LOW)
+    GPIO.output(CLOCK, GPIO.LOW)
+    GPIO.output(LATCH, GPIO.LOW)
+    GPIO.output(RESET, GPIO.LOW)
+    GPIO.output(DATA, GPIO.LOW)
+
+    usleep(CRITICAL_DELAY)
+
+    GPIO.output(RESET, GPIO.HIGH)
+
+    usleep(CRITICAL_DELAY)
+
+    GPIO.output(RESET, GPIO.LOW)
+
+def _ramp_eq(var, steps, ramp_start, ramp_end):
+    return ((ramp_end - ramp_start) / steps) * var + ramp_start
 
 def _ramp_up():
     for i in range(RAMP_STEPS):

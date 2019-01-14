@@ -96,7 +96,7 @@ def get_recipes(request):
     return JsonResponse({'result': to_return}, status=200)
 
 @api_view(['POST'])
-def dispense_liquid(request):
-    Pumps.pump(milliliters=-10000)
+def dispense_liquid(request, pump_id):
+    Pumps.pump(milliliters=-10000, pump_obj=Pump.objects.filter(id=pump_id).first())
 
     return JsonResponse({}, status=200)
