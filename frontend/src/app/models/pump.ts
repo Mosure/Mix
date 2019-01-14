@@ -5,6 +5,7 @@ export class Pump {
     liquid: Liquid;
     volume: number;
     level: number;
+    pin: number;
     hasCheckValve: boolean;
     enabled: boolean;
 }

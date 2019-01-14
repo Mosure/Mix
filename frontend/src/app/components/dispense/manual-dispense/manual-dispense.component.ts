@@ -24,7 +24,6 @@ export class ManualDispenseComponent {
 
   end_dispense() {
     this.pumpService.GetPumps().subscribe((pumps) => {
-      
       this.pumpService.DispenseLiquid(pumps.find(p => p.liquid.name == this.liquid.name).id).subscribe(() => {});
     });
     
