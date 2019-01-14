@@ -137,10 +137,10 @@ def _set_pump(pid):
 
     usleep(CRITICAL_DELAY)
 
-    GPIO.output(OUTPUT_ENABLE, GPIO.HIGH)
+    GPIO.output(OUTPUT_ENABLE, GPIO.LOW)
 
 def _clear():
-    GPIO.output(OUTPUT_ENABLE, GPIO.LOW)
+    GPIO.output(OUTPUT_ENABLE, GPIO.HIGH)
     GPIO.output(CLOCK, GPIO.LOW)
     GPIO.output(LATCH, GPIO.LOW)
     GPIO.output(RESET, GPIO.LOW)
@@ -149,10 +149,6 @@ def _clear():
     usleep(CRITICAL_DELAY)
 
     GPIO.output(RESET, GPIO.HIGH)
-
-    usleep(CRITICAL_DELAY)
-
-    GPIO.output(RESET, GPIO.LOW)
 
 def _ramp_eq(var, steps, ramp_start, ramp_end):
     return ((ramp_end - ramp_start) / steps) * var + ramp_start
