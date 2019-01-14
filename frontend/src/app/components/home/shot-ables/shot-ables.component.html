@@ -3,6 +3,6 @@
         <div class="tile-title-center">
             {{liquid.name}}
         </div>
-        <pump-quick-status class="tile-title-container" [pump]="pumpService.GetCombinedPump(liquid) | async"></pump-quick-status>
+        <pump-quick-status class="tile-title-container" [liquid]="liquid"></pump-quick-status>
     </mat-grid-tile>
 </mat-grid-list>

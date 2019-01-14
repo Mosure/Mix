@@ -76,30 +76,6 @@ export class PumpService {
         );
     }
 
-    GetCombinedPump(liquid: Liquid): Observable<Pump> {
-        return this.GetActivePumps(liquid.type).pipe(
-            map(
-                pumps => {
-                    let newPump = new Pump();
-                    newPump.liquid = liquid;
-                    newPump.enabled = true;
-                    newPump.level = 0;
-                    newPump.volume = 0;
-
-                    for (const pump of pumps) {
-                        if (pump.liquid.name === liquid.name) {
-                            newPump.hasCheckValve = newPump.hasCheckValve || pump.hasCheckValve;
-                            newPump.level = newPump.level + pump.level;
-                            newPump.volume = newPump.volume + pump.volume;
-                        }
-                    }
-
-                    return newPump;
-                }
-            )
-        );
-    }
-
     UpdatePump(pump: Pump) {
         const options = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
