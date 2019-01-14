@@ -42,7 +42,7 @@ export class PumpService {
                     .pipe(
                         map(result => JSON.parse(<string> result)['result'] as boolean),
                         tap(
-                            data => { },
+                            _ => { },
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
@@ -60,7 +60,7 @@ export class PumpService {
                     .pipe(
                         map(result => JSON.parse(<string> result)['result'] as Pump[]),
                         tap(
-                            data => { },
+                            _ => { },
                             error => this.errorHandler.HandleError(error, null)
                         )
                     ));
@@ -120,16 +120,16 @@ export class PumpService {
         );
     }
 
-    DispenseLiquid() {
+    DispenseLiquid(pump_id: number) {
         const options = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
             responseType: 'text' as 'json'
         };
 
-        return this.http.post(environment.api + 'dispense', options)
+        return this.http.post(environment.api + 'dispense/' + pump_id, options)
                     .pipe(
                         tap(
-                            data => this.cache.invalidate('GetPumps'),
+                            _ => this.cache.invalidate('GetPumps'),
                             error => this.errorHandler.HandleError(error, null)
                         )
                     );
